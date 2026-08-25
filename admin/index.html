@@ -7,6 +7,37 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Mesin Supabase untuk Upload File -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- SISTEM KEAMANAN LOGIN ADMIN (USERNAME + PASSWORD) -->
+  <script>
+    // Ganti Username dan Password rahasia di sini
+    const USERNAME_ADMIN = "hafidut";
+    const PASSWORD_ADMIN = "Hafidut123#"; 
+
+    // Cek apakah admin sudah login sebelumnya di browser ini
+    if (sessionStorage.getItem("admin_logged_in") !== "true") {
+      
+      // 1. Todong Username dulu
+      let inputUser = prompt("👤 Masukkan USERNAME untuk masuk ke Dashboard:");
+      
+      if (inputUser === USERNAME_ADMIN) {
+        // 2. Kalau Username bener, baru todong Password
+        let inputPass = prompt("🔒 Masukkan PASSWORD Admin:");
+        
+        if (inputPass === PASSWORD_ADMIN) {
+          // Kalau dua-duanya bener, izinkan masuk!
+          sessionStorage.setItem("admin_logged_in", "true");
+        } else {
+          alert("❌ PASSWORD Salah! Akses ditolak.");
+          window.location.href = "../index.html"; // Tendang ke halaman depan
+        }
+      } else {
+        alert("❌ USERNAME Tidak Dikenal! Akses ditolak.");
+        window.location.href = "../index.html"; // Tendang ke halaman depan
+      }
+      
+    }
+  </script>
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 p-4 md:p-8">
 
