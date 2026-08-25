@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ANTI CACHE BROWSER BIAR GAK KENA PRANK -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <title>Pojok Kuliner - A'DONAT Premium</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,13 +49,13 @@
         </div>
     </header>
 
-    <!-- Varian Rasa (Wadah Kosong yang akan diisi otomatis) -->
+    <!-- Varian Rasa (Wadah Kosong yang akan diisi otomatis dengan Sihir Grid Otomatis) -->
     <section class="bg-amber-100 py-16">
         <div class="max-w-6xl mx-auto px-4 text-center">
             <h2 class="text-3xl font-extrabold text-amber-900 mb-10">Pilihan Topping Favorit</h2>
             
             <!-- TITIK KUMPUL TOPPING -->
-            <div id="wadah-topping" class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div id="wadah-topping" class="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-6 max-w-5xl mx-auto">
                 <p class="col-span-full text-amber-700 animate-pulse">Memuat topping lezat...</p>
             </div>
 
@@ -73,7 +79,6 @@
             <div class="md:w-1/2 text-center md:text-left">
                 <h3 class="text-3xl font-extrabold text-amber-900 mb-3">🎉 Spesial Ulang Tahun</h3>
                 <p class="text-slate-600 mb-6">Bikin momen spesial orang tersayang makin manis dengan custom donat huruf atau tower donat A'DONAT! Harga bisa disesuaikan, ngobrol santai aja dulu yuk.</p>
-                <!-- Tombol ini link WA-nya bakal diisi otomatis sama JavaScript -->
                 <a id="btn-ultah" href="#" target="_blank" class="inline-block bg-amber-900 hover:bg-amber-950 text-white px-6 py-3 rounded-full font-bold shadow-md transition">Tanya Orderan Ultah</a>
             </div>
             <div class="md:w-1/2 w-full">
@@ -88,7 +93,6 @@
         <div class="max-w-4xl mx-auto px-4 text-center">
             <h4 class="text-xl font-bold text-white mb-4">🛵 Info Pengiriman</h4>
             <div class="bg-amber-800/80 p-5 rounded-xl inline-block mb-6 text-left shadow-inner">
-                <!-- TITIK KUMPUL INFO PENGIRIMAN -->
                 <div id="teks-pengiriman" class="text-white whitespace-pre-line leading-relaxed">
                     Memuat info pengiriman...
                 </div>
@@ -98,7 +102,7 @@
     </footer>
 
     <!-- ========================================== -->
-    <!-- 🚀 SCRIPT PINTAR PENYEDOT DATA VERCEL 🚀 -->
+    <!-- 🚀 SCRIPT PINTAR DENGAN AUTO-ARRANGE GRID 🚀 -->
     <!-- ========================================== -->
     <script>
         const API_URL = 'https://backend-adonat.vercel.app/api';
@@ -106,9 +110,9 @@
         async function muatFrontend() {
             try {
                 // 1. TARIK DATA PENGATURAN (WA & INFO PENGIRIMAN)
-                const resPengaturan = await fetch(`${API_URL}/pengaturan`);
+                const resPengaturan = await fetch(`${API_URL}/pengaturan?t=${Date.now()}`);
                 const set = await resPengaturan.json();
-                let nomorWa = "6281234567890"; // Nomor darurat
+                let nomorWa = "6281234567890";
 
                 if (set.sukses) {
                     const dataWa = set.data.find(i => i.kunci === 'no_whatsapp');
@@ -120,26 +124,49 @@
                     }
                 }
 
-                // Update link WhatsApp untuk tombol Ulang Tahun
                 const btnUltah = document.getElementById('btn-ultah');
                 if(btnUltah) {
                     btnUltah.href = `https://wa.me/${nomorWa}?text=Halo%20Pojok%20Kuliner!%20Saya%20mau%20tanya-tanya%20untuk%20Orderan%20Spesial%20Ultah%20A'DONAT.%20Kira-kira%20kalau%20request%20kayak%20gini%20bisa?`;
                 }
 
-                // 2. TARIK DATA TOPPING
-                const resTopping = await fetch(`${API_URL}/topping`);
+                // 2. TARIK DATA TOPPING (DENGAN LOGIKA AUTO-ARRANGE SIMETRIS & STRETCH)
+                const resTopping = await fetch(`${API_URL}/topping?t=${Date.now()}`);
                 const top = await resTopping.json();
                 const wadahTopping = document.getElementById('wadah-topping');
 
                 if (top.sukses && wadahTopping) {
                     wadahTopping.innerHTML = ''; 
-                    top.data.forEach(item => {
-                        // Kodingan HTML ini di-copy mentah-mentah dari desain aslimu bosku!
+                    const dataTopping = top.data;
+                    const total = dataTopping.length;
+
+                    dataTopping.forEach((item, index) => {
+                        let desktopSpan = 'md:col-span-3'; // Default 4 kotak sejajar
+                        
+                        if (total === 5) {
+                            desktopSpan = (index < 3) ? 'md:col-span-4' : 'md:col-span-6'; // 3 di atas, 2 di bawah melebar
+                        } else if (total === 6) {
+                            desktopSpan = 'md:col-span-4'; // 3 di atas, 3 di bawah (Simetris sempurna!)
+                        } else if (total === 7) {
+                            desktopSpan = (index < 4) ? 'md:col-span-3' : 'md:col-span-4'; // 4 di atas, 3 di bawah menyesuaikan
+                        } else if (total === 1) {
+                            desktopSpan = 'md:col-span-12';
+                        } else if (total === 2) {
+                            desktopSpan = 'md:col-span-6';
+                        } else if (total === 3) {
+                            desktopSpan = 'md:col-span-4';
+                        }
+
+                        // Buat HP: Kalau ganjil, item terakhir otomatis melebar
+                        let mobileSpan = 'col-span-1';
+                        if (total % 2 !== 0 && index === total - 1) {
+                            mobileSpan = 'col-span-2';
+                        }
+
                         wadahTopping.innerHTML += `
-                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col h-full">
-                                <img src="${item.url_foto}" alt="${item.nama}" class="w-full h-40 object-cover flex-shrink-0" onerror="this.src='https://placehold.co/400x300?text=Donat+Lezat'">
+                            <div class="${mobileSpan} ${desktopSpan} bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col h-full">
+                                <img src="${item.url_foto}" alt="${item.nama}" class="w-full h-40 md:h-48 object-cover flex-shrink-0" onerror="this.src='https://placehold.co/400x300?text=Donat+Lezat'">
                                 <div class="p-4 flex-grow flex items-center justify-center">
-                                    <h3 class="text-xl font-bold text-amber-900 text-center">${item.ikon_emoji} ${item.nama}</h3>
+                                    <h3 class="text-xl font-bold text-amber-900 text-center line-clamp-2">${item.ikon_emoji} ${item.nama}</h3>
                                 </div>
                             </div>
                         `;
@@ -147,17 +174,14 @@
                 }
 
                 // 3. TARIK DATA PAKET & PROMO
-                const resPaket = await fetch(`${API_URL}/paket`);
+                const resPaket = await fetch(`${API_URL}/paket?t=${Date.now()}`);
                 const pkt = await resPaket.json();
                 const wadahPaket = document.getElementById('wadah-paket');
 
                 if (pkt.sukses && wadahPaket) {
                     wadahPaket.innerHTML = ''; 
                     pkt.data.forEach(item => {
-                        
-                        // Logika ngebedain gaya desain Paket Biasa vs Paket Promo
                         if (item.is_promo) {
-                            // DESAIN KOTAK PROMO
                             wadahPaket.innerHTML += `
                                 <div class="bg-gradient-to-br from-orange-400 to-amber-600 p-8 rounded-3xl shadow-xl text-center transform md:-translate-y-4 hover:-translate-y-6 transition flex flex-col justify-between relative">
                                     <div class="absolute top-0 right-0 bg-red-500 text-white text-sm font-bold px-4 py-1 rounded-bl-xl rounded-tr-3xl shadow-md">PROMO!</div>
@@ -171,7 +195,6 @@
                                 </div>
                             `;
                         } else {
-                            // DESAIN KOTAK BIASA
                             wadahPaket.innerHTML += `
                                 <div class="bg-white p-8 rounded-3xl shadow-xl border-t-4 border-amber-400 text-center flex flex-col justify-between transform hover:-translate-y-2 transition">
                                     <div>
@@ -192,7 +215,6 @@
             }
         }
 
-        // GAS NYALAKAN MESIN!
         muatFrontend();
     </script>
 
