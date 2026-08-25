@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pojok Kuliner - A'DONAT Premium</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #fffbeb; 
+            background-image: radial-gradient(#fcd34d 2px, transparent 2px); 
+            background-size: 40px 40px; 
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="text-3xl font-extrabold tracking-tighter">
+                <span class="text-orange-500">Pojok</span><span class="text-amber-900"> Kuliner</span>
+            </div>
+            <a href="#pesan" class="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-full font-semibold transition shadow-md">Pesan Sekarang</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-6xl mx-auto px-4 py-12 md:py-20 flex flex-col-reverse md:flex-row items-center gap-8">
+        <div class="md:w-1/2 text-center md:text-left">
+            <p class="text-xl md:text-2xl font-bold text-orange-600 mb-2 tracking-wide uppercase">A'DONAT Rajanya Donat Kentang</p>
+            <h1 class="text-4xl md:text-6xl font-extrabold text-amber-900 leading-tight mb-4">
+                Manisnya Pas, <br><span class="text-orange-500">Lumernya Bikin Nagih!</span>
+            </h1>
+            <p class="text-lg text-slate-600 mb-8">Pilihan tepat buat nemenin waktu santaimu. Dibuat fresh setiap hari dengan topping melimpah ruah.</p>
+            <a href="#pesan" class="inline-block bg-orange-500 hover:bg-orange-600 text-white text-lg px-8 py-3 rounded-full font-bold shadow-lg transition transform hover:-translate-y-1">Lihat Menu & Pesan</a>
+        </div>
+        <div class="md:w-1/2">
+            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80&fit=crop" alt="Donat Lezat" class="rounded-3xl shadow-2xl object-cover h-80 w-full md:h-96">
+        </div>
+    </header>
+
+    <!-- Varian Rasa (Wadah Kosong yang akan diisi otomatis) -->
+    <section class="bg-amber-100 py-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-extrabold text-amber-900 mb-10">Pilihan Topping Favorit</h2>
+            
+            <!-- TITIK KUMPUL TOPPING -->
+            <div id="wadah-topping" class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                <p class="col-span-full text-amber-700 animate-pulse">Memuat topping lezat...</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Harga & Paket (Wadah Kosong yang akan diisi otomatis) -->
+    <section id="pesan" class="pt-16 pb-8 max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-extrabold text-center text-amber-900 mb-12">Pilih Paket Donatmu</h2>
+        
+        <!-- TITIK KUMPUL PAKET -->
+        <div id="wadah-paket" class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+             <p class="col-span-full text-center text-amber-700 animate-pulse">Memuat paket menarik...</p>
+        </div>
+
+    </section>
+
+    <!-- Orderan Spesial Ultah -->
+    <section class="pb-16 max-w-6xl mx-auto px-4">
+        <div class="bg-amber-50 border-2 border-dashed border-amber-400 rounded-3xl p-8 shadow-lg flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
+            <div class="md:w-1/2 text-center md:text-left">
+                <h3 class="text-3xl font-extrabold text-amber-900 mb-3">🎉 Spesial Ulang Tahun</h3>
+                <p class="text-slate-600 mb-6">Bikin momen spesial orang tersayang makin manis dengan custom donat huruf atau tower donat A'DONAT! Harga bisa disesuaikan, ngobrol santai aja dulu yuk.</p>
+                <!-- Tombol ini link WA-nya bakal diisi otomatis sama JavaScript -->
+                <a id="btn-ultah" href="#" target="_blank" class="inline-block bg-amber-900 hover:bg-amber-950 text-white px-6 py-3 rounded-full font-bold shadow-md transition">Tanya Orderan Ultah</a>
+            </div>
+            <div class="md:w-1/2 w-full">
+                <img src="Ultah.png" alt="Donat Ulang Tahun" class="rounded-2xl shadow-md object-cover h-60 w-full" onerror="this.src='https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800'">
+                <p class="text-center text-xs text-slate-400 mt-2 italic">*Contoh pesanan spesial ulang tahun</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Pengiriman & Footer -->
+    <footer class="bg-amber-900 text-amber-100 py-10 mt-8">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h4 class="text-xl font-bold text-white mb-4">🛵 Info Pengiriman</h4>
+            <div class="bg-amber-800/80 p-5 rounded-xl inline-block mb-6 text-left shadow-inner">
+                <!-- TITIK KUMPUL INFO PENGIRIMAN -->
+                <div id="teks-pengiriman" class="text-white whitespace-pre-line leading-relaxed">
+                    Memuat info pengiriman...
+                </div>
+            </div>
+            <p class="text-sm mt-4">© 2026 Pojok Kuliner - A'DONAT. Dibuat sepenuh hati untuk pecinta manis.</p>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 🚀 SCRIPT PINTAR PENYEDOT DATA VERCEL 🚀 -->
+    <!-- ========================================== -->
+    <script>
+        const API_URL = 'https://backend-adonat.vercel.app/api';
+
+        async function muatFrontend() {
+            try {
+                // 1. TARIK DATA PENGATURAN (WA & INFO PENGIRIMAN)
+                const resPengaturan = await fetch(`${API_URL}/pengaturan`);
+                const set = await resPengaturan.json();
+                let nomorWa = "6281234567890"; // Nomor darurat
+
+                if (set.sukses) {
+                    const dataWa = set.data.find(i => i.kunci === 'no_whatsapp');
+                    const dataInfo = set.data.find(i => i.kunci === 'info_pengiriman');
+                    
+                    if (dataWa) nomorWa = dataWa.nilai;
+                    if (dataInfo) {
+                        document.getElementById('teks-pengiriman').innerText = dataInfo.nilai;
+                    }
+                }
+
+                // Update link WhatsApp untuk tombol Ulang Tahun
+                const btnUltah = document.getElementById('btn-ultah');
+                if(btnUltah) {
+                    btnUltah.href = `https://wa.me/${nomorWa}?text=Halo%20Pojok%20Kuliner!%20Saya%20mau%20tanya-tanya%20untuk%20Orderan%20Spesial%20Ultah%20A'DONAT.%20Kira-kira%20kalau%20request%20kayak%20gini%20bisa?`;
+                }
+
+                // 2. TARIK DATA TOPPING
+                const resTopping = await fetch(`${API_URL}/topping`);
+                const top = await resTopping.json();
+                const wadahTopping = document.getElementById('wadah-topping');
+
+                if (top.sukses && wadahTopping) {
+                    wadahTopping.innerHTML = ''; 
+                    top.data.forEach(item => {
+                        // Kodingan HTML ini di-copy mentah-mentah dari desain aslimu bosku!
+                        wadahTopping.innerHTML += `
+                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-300 flex flex-col h-full">
+                                <img src="${item.url_foto}" alt="${item.nama}" class="w-full h-40 object-cover flex-shrink-0" onerror="this.src='https://placehold.co/400x300?text=Donat+Lezat'">
+                                <div class="p-4 flex-grow flex items-center justify-center">
+                                    <h3 class="text-xl font-bold text-amber-900 text-center">${item.ikon_emoji} ${item.nama}</h3>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                // 3. TARIK DATA PAKET & PROMO
+                const resPaket = await fetch(`${API_URL}/paket`);
+                const pkt = await resPaket.json();
+                const wadahPaket = document.getElementById('wadah-paket');
+
+                if (pkt.sukses && wadahPaket) {
+                    wadahPaket.innerHTML = ''; 
+                    pkt.data.forEach(item => {
+                        
+                        // Logika ngebedain gaya desain Paket Biasa vs Paket Promo
+                        if (item.is_promo) {
+                            // DESAIN KOTAK PROMO
+                            wadahPaket.innerHTML += `
+                                <div class="bg-gradient-to-br from-orange-400 to-amber-600 p-8 rounded-3xl shadow-xl text-center transform md:-translate-y-4 hover:-translate-y-6 transition flex flex-col justify-between relative">
+                                    <div class="absolute top-0 right-0 bg-red-500 text-white text-sm font-bold px-4 py-1 rounded-bl-xl rounded-tr-3xl shadow-md">PROMO!</div>
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-white mb-2">${item.nama_paket}</h3>
+                                        <p class="text-amber-100 mb-6">${item.deskripsi}</p>
+                                        <div class="text-5xl font-extrabold text-white mb-2">${item.harga / 1000}k</div>
+                                        <p class="font-semibold text-amber-100">${item.jumlah_pcs}</p>
+                                    </div>
+                                    <a href="https://wa.me/${nomorWa}?text=Halo%20Pojok%20Kuliner!%20Saya%20mau%20pesan%20A'DONAT%20PROMO%20${encodeURIComponent(item.nama_paket)}.%0AVarian%20Rasa:%20%0AAlamat:%20" target="_blank" class="mt-8 block w-full bg-white hover:bg-slate-100 text-orange-600 py-3 rounded-xl font-bold shadow-md transition">Ambil Promo Ini</a>
+                                </div>
+                            `;
+                        } else {
+                            // DESAIN KOTAK BIASA
+                            wadahPaket.innerHTML += `
+                                <div class="bg-white p-8 rounded-3xl shadow-xl border-t-4 border-amber-400 text-center flex flex-col justify-between transform hover:-translate-y-2 transition">
+                                    <div>
+                                        <h3 class="text-2xl font-bold text-slate-800 mb-2">${item.nama_paket}</h3>
+                                        <p class="text-slate-500 mb-6">${item.deskripsi}</p>
+                                        <div class="text-5xl font-extrabold text-amber-600 mb-2">${item.harga / 1000}k</div>
+                                        <p class="font-semibold text-slate-700">${item.jumlah_pcs}</p>
+                                    </div>
+                                    <a href="https://wa.me/${nomorWa}?text=Halo%20Pojok%20Kuliner!%20Saya%20mau%20pesan%20A'DONAT%20${encodeURIComponent(item.nama_paket)}.%0AVarian%20Rasa:%20%0AAlamat:%20" target="_blank" class="mt-8 block w-full bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-xl font-bold shadow-md transition">Pesan Sekarang</a>
+                                </div>
+                            `;
+                        }
+                    });
+                }
+
+            } catch (error) {
+                console.error("Gagal menarik data dari server backend:", error);
+            }
+        }
+
+        // GAS NYALAKAN MESIN!
+        muatFrontend();
+    </script>
+
+</body>
+</html>
