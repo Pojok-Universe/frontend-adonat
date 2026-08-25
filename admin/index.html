@@ -137,7 +137,8 @@
 
     // ================= PENGATURAN UMUM =================
     async function loadPengaturan() {
-      const res = await fetch(`${BASE_URL}/pengaturan`);
+      // Penawar Cache Bandel: ?t=...
+      const res = await fetch(`${BASE_URL}/pengaturan?t=${Date.now()}`);
       const result = await res.json();
       if (result.sukses && result.data) {
         const wa = result.data.find(item => item.kunci === 'no_whatsapp');
@@ -161,7 +162,8 @@
 
     // ================= TOPPING & UPLOAD =================
     async function loadTopping() {
-      const res = await fetch(`${BASE_URL}/topping`);
+      // Penawar Cache Bandel: ?t=...
+      const res = await fetch(`${BASE_URL}/topping?t=${Date.now()}`);
       const result = await res.json();
       const container = document.getElementById('listTopping');
       container.innerHTML = '';
@@ -191,13 +193,12 @@
       if (!file) return alert("Pilih foto dulu ya!");
 
       try {
-        // Nyalakan layar loading
         loading.classList.remove('hidden');
 
         // 1. Ubah nama file biar gak bentrok
         const namaFileUnik = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9.]/g, '');
         
-        // 2. Tembak file ke Supabase Storage (Bucket: foto-donat)
+        // 2. Tembak file ke Supabase Storage
         const { data: uploadData, error: uploadError } = await _supabase.storage.from('foto-donat').upload(namaFileUnik, file);
         if (uploadError) throw new Error("Gagal upload foto ke brankas!");
 
@@ -205,20 +206,25 @@
         const { data: urlData } = _supabase.storage.from('foto-donat').getPublicUrl(namaFileUnik);
         const linkFotoUpload = urlData.publicUrl;
 
-        // 4. Simpan ke Backend kamu pakai link yang udah didapet
+        // 4. Simpan ke Backend
         const payload = {
           nama: document.getElementById('namaTopping').value,
           ikon_emoji: document.getElementById('ikonEmoji').value,
           url_foto: linkFotoUpload
         };
 
-        await fetch(`${BASE_URL}/topping`, {
+        const responServer = await fetch(`${BASE_URL}/topping`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        // Matikan loading, bersihkan form, reload data
+        // JEBAKAN ERROR: Cek kalau database diam-diam nolak!
+        const hasilServer = await responServer.json();
+        if (!hasilServer.sukses) {
+          throw new Error("Ditolak Database Supabase: " + hasilServer.error);
+        }
+
         loading.classList.add('hidden');
         document.getElementById('formTopping').reset();
         loadTopping();
@@ -226,7 +232,7 @@
 
       } catch (err) {
         loading.classList.add('hidden');
-        alert(err.message);
+        alert("WADUH ERROR BOSKU: " + err.message); // Muncukin sumber masalahnya
       }
     });
 
@@ -237,9 +243,9 @@
     }
 
     // ================= PAKET =================
-    // (Fungsi loadPaket, tambahPaket, hapusPaket dibikin ringkas biar fokus ke upload)
     async function loadPaket() {
-      const res = await fetch(`${BASE_URL}/paket`);
+      // Penawar Cache Bandel: ?t=...
+      const res = await fetch(`${BASE_URL}/paket?t=${Date.now()}`);
       const result = await res.json();
       const container = document.getElementById('listPaket');
       container.innerHTML = '';
@@ -267,7 +273,15 @@
         jumlah_pcs: document.getElementById('pcsPaket').value,
         is_promo: document.getElementById('isPromo').checked
       };
-      await fetch(`${BASE_URL}/paket`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      
+      const responServer = await fetch(`${BASE_URL}/paket`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      const hasilServer = await responServer.json();
+      
+      // Jebakan error untuk form Paket
+      if (!hasilServer.sukses) {
+         return alert("Error simpan paket: " + hasilServer.error);
+      }
+
       document.getElementById('formPaket').reset();
       loadPaket();
     });
